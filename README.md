@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>Document title</title>
+  <title>Document titlse</title>
 </head>
 </html>
 <body>
