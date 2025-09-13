@@ -13,7 +13,13 @@
     <p>Ini adalah gambar seekor kucing yang menggemaskan. Kucing adalah hewan peliharaan yang populer di seluruh dunia.</p>
     <h1>Chik nubis
     </h1>
-    <iframe src="https://drive.google.com/file/d/1j98s_JQt7FEtqY-04QVVJ_pnZyuLIoNj/preview" width="640" height="480" allow="autoplay"></iframe>
+    <iframe
+  src="https://drive.google.com/file/d/1j98s_JQt7FEtqY-04QVVJ_pnZyuLIoNj/preview"
+  width="640"
+  height="480"
+  allow="autoplay; fullscreen"
+  allowfullscreen>
+    </iframe>
 </body>
 
 
