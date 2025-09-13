@@ -14,12 +14,13 @@
     <h1>Chik nubis
     </h1>
 <iframe 
-  src="https.google.com/drive/file/d/1gWcYQRChYxhSsuSJwRUBdMyggvBXNtBc/preview" 
-  width="640" 
-  height="480" 
-  frameborder="0" 
-  allow="autoplay; fullscreen" 
-  allowfullscreen="true" 
+<iframe
+  src="https://drive.google.com/file/d/1j98s_JQt7FEtqY-04QVVJ_pnZyuLIoNj/preview"
+  width="640"
+  height="480"
+  allow="autoplay; fullscreen"
+  allowfullscreen= "True">
+</iframe>
 </iframe>
 </body>
 
