@@ -1,6 +1,4 @@
-# revian.github.io
-<!DOCTYPE html>
-<html lang="nigga">
+<html lang="en">
 <head>
     <title>
         halo gua revina 
