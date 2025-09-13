@@ -11,7 +11,7 @@
     <h1>Kucing Hama!</h1>
     <img src="https://atshura.github.io/1715227439865.jpg" alt="Gambar" width="640">
     <p>Ini adalah gambar seekor kucing bersama majikannya, bang to.</p>
-    <h1>Chik nubis
+    <h1>Chik nubissss
     </h1>
 <iframe 
   src="https://drive.google.com/file/d/1gWcYQRChYxhSsuSJwRUBdMyggvBXNtBc/preview" 
