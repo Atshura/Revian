@@ -13,12 +13,12 @@
     <p>Ini adalah gambar seekor kucing bersama majikannya, bang to.</p>
     <h1>Chik nubis
     </h1>
-<iframe
-  src="https.google.com/drive/file/d/1gWcYQRChYxhSsuSJwRUBdMyggvBXNtBc/preview"
-  width="640"
-  height="480"
+<iframe 
+  src="https://drive.google.com/file/d/1gWcYQRChYxhSsuSJwRUBdMyggvBXNtBc/preview" 
+  width="640" 
+  height="480" 
   allow="autoplay; fullscreen"
-  allowfullscreen= "True">
+  allowfullscreen>
 </iframe>
 </body>
 
