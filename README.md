@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width" />
   <title>Document titlse</title>
 </head>
-</html>
 <body>
     <h1>Halo Rev</h1>
     <p>ini paragraf</p>
