@@ -1,8 +1,8 @@
 <html lang="nigga">
 <head>
-    <tittle>
+    <title>
         Website Terbaik Tahun Ini
-    </tittle>
+    </title>
 </head>
 <body>
     <h1>Halo Rev</h1>
