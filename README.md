@@ -1,6 +1,6 @@
 <html lang="nigga">
 <head>
-    Website terbaik abad inoi
+    Website terbaik abad ini
 </head>
 <body>
     <h1>Halo Rev</h1>
