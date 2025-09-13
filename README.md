@@ -20,8 +20,6 @@
   frameborder="0" 
   allow="autoplay; fullscreen" 
   allowfullscreen="true" 
-  webkitallowfullscreen="true" 
-  mozallowfullscreen="true">
 </iframe>
 </body>
 
