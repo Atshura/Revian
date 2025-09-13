@@ -1,9 +1,12 @@
 <html lang="en-US">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Document title</title>
-  </head>
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Document title</title>
+</head>
+</html>
 <body>
     <h1>Halo Rev</h1>
     <p>ini paragraf</p>
