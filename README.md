@@ -9,7 +9,7 @@
     <p>ini paragraf</p>
     <a href="https://youtu.be/y_fK9Quyv9c?si=DwwAIqRxgh42l7Ee">jangan di klik</a>
     <h1>Kucing Hama!</h1>
-    <img src="https://drive.google.com/uc?id=1P0D2QopwTUw4RHwQ7dMtgiweEclnPcnK" alt="Bang to" width="640">
+    <img src="https://atshura.github.io/1715227439865.jpg" alt="Gambar" width="640">
     <p>Ini adalah gambar seekor kucing bersama majikannya, bang to.</p>
     <h1>Chik nubis
     </h1>
