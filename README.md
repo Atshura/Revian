@@ -20,10 +20,11 @@
         }
         body {
             font-family: 'Poppins', sans-serif;
-            /* Gradasi warna BARU untuk background utama */
+            /* Gradasi warna BARU untuk background utama & loading */
             background: linear-gradient(to bottom, #c0e399 50%, #F7C0CA 50%);
             background-attachment: fixed;
             overflow: hidden; /* Mencegah scroll saat loading screen aktif */
+            transition: background 0.5s ease; /* Transisi untuk perubahan background */
         }
         /* --- 1. Gaya untuk Loading Screen --- */
         #loading-screen {
@@ -82,7 +83,7 @@
             visibility: hidden;
             opacity: 0;
             transition: opacity 1s ease-in;
-            background-color: #f4f4f4; /* Warna background abu-abu muda untuk halaman konten */
+            /* Background area konten dihapus agar menyatu dengan body */
         }
         /* Kartu utama yang membungkus semua konten */
         .content-card {
@@ -109,7 +110,7 @@
             font-size: 1rem;
             color: #555;
             margin-top: 5px;
-        }
+        }     
         /* Kotak untuk menampung video dan foto */
         .media-box {
             background-color: white;
@@ -166,7 +167,7 @@
         </div>
     </div>
     <main id="main-content">
-        <div class="content-card">         
+        <div class="content-card">      
             <div class="title-section">
                 <h1>Untuk Ibu,</h1>
                 <p>dari ayah, mas, adik</p>
@@ -194,6 +195,7 @@
         });
         startButton.addEventListener('click', function() {
             document.body.style.overflow = 'auto';
+            document.body.style.background = '#f4f4f4'; // <-- BARIS INI MENGHILANGKAN GRADASI DI MAIN PAGE       
             loader.style.opacity = '0';
             mainContent.style.visibility = 'visible';
             mainContent.style.opacity = '1';
