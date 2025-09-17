@@ -1,16 +1,24 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Untuk Ibu</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap');
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap');   
+        /* Reset dasar untuk memastikan tampilan fullscreen */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        /* === PRELOADER === */
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden; /* Mencegah scroll saat loading */
+        }
+        /* === PRELOADER (Tetap sama, sudah berfungsi baik) === */
         .preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #c0e399; z-index: 9999; display: flex;
@@ -33,14 +41,17 @@
             0%, 50%, 100% { transform: rotate(-45deg) scale(1); }
             30%, 70% { transform: rotate(-45deg) scale(1.1); }
         }
-        /* === MAIN PAGE LAYOUT (WARNA & TATA LETAK BARU) === */
+        /* === MAIN PAGE LAYOUT (FIXED UNTUK FULLSCREEN) === */
         .main-container {
-            width: 100%; height: 100%; display: flex; flex-direction: column;
+            width: 100vw; /* 100% lebar viewport */
+            height: 100vh; /* 100% tinggi viewport */
+            display: flex; flex-direction: column;
             opacity: 0; transition: opacity 0.8s ease-out 0.5s;
+            background-color: #fff; /* Latar dasar putih */
         }
         body.loaded .main-container { opacity: 1; }
         .top-section {
-            background-color: #c0e399; /* Warna hijau baru */
+            background-color: #c0e399;
             padding: 40px 20px 30px 20px; text-align: center;
         }
         .main-title {
@@ -53,47 +64,57 @@
         }
         .content-section {
             flex-grow: 1;
-            /* Gradient untuk transisi warna dari hijau ke putih */
-            background: linear-gradient(to bottom, #c0e399 0%, #c0e399 150px, white 150px, white 100%);
+            position: relative; /* Kunci untuk tata letak warna */
             display: flex; flex-direction: column; align-items: center;
             justify-content: center; padding: 20px; gap: 25px;
         }
-        .bottom-section {
-            background-color: #c0e399; /* Warna hijau baru */
-            min-height: 8%; /* Sedikit lebih kecil */
+        /* Trik untuk membuat warna hijau di belakang amplop */
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 150px; /* Tinggi area hijau */
+            background-color: #c0e399;
+            z-index: 0;
         }
-        /* === FITUR AMPLOP (PERBAIKAN BUG) === */
+        .bottom-section {
+            background-color: #c0e399;
+            min-height: 8%;
+        }
+        /* === FITUR AMPLOP (BUG FIXED & LOGIC CHANGED) === */
         .envelope {
             position: relative; width: 280px; height: 180px;
-            cursor: pointer; transform-style: preserve-3d;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden; /* FIX UTAMA: Sembunyikan konten yang meluap */
+            border-radius: 10px; /* Agar overflow mengikuti bentuk amplop */
+            z-index: 1; /* Pastikan amplop di atas background hijau */
+        }
+        .envelope-back, .envelope-flap, .envelope-front-label, .letter {
+            position: absolute;
+            width: 100%; height: 100%;
         }
         .envelope-back {
-            position: absolute; width: 100%; height: 100%;
-            background-color: #f7c9d9; border-radius: 10px;
-            z-index: 1; /* Atur tumpukan elemen */
+            background-color: #f7c9d9;
         }
         .envelope-flap {
-            position: absolute; width: 100%; height: 100%;
-            background-color: #f5b9cd; transform-origin: top;
+            background-color: #f5b9cd;
+            transform-origin: top;
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
-            z-index: 3; /* Atur tumpukan elemen */
+            z-index: 3;
         }
         .envelope-front-label {
-            position: absolute; width: 100%; height: 100%; display: flex;
-            justify-content: center; align-items: center; color: #333;
-            font-size: 1.8em; font-weight: 600; transition: opacity 0.3s ease;
-            z-index: 4; /* Atur tumpukan elemen */
+            display: flex; justify-content: center; align-items: center;
+            color: #333; font-size: 1.8em; font-weight: 600;
+            transition: opacity 0.3s ease; z-index: 4;
         }
         .letter {
-            position: absolute; top: 0; width: 95%; height: 95%;
-            margin: 2.5%; background-color: white; border-radius: 8px;
-            transform: translateY(100%);
+            top: 0; width: 95%; height: 95%; margin: 2.5%;
+            background-color: white; border-radius: 8px;
+            transform: translateY(100%); /* Mulai dari bawah, tersembunyi */
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; justify-content: center;
-            align-items: center; gap: 15px;
-            z-index: 2; /* Atur tumpukan elemen */
+            align-items: center; gap: 15px; z-index: 2;
         }
         .letter-content { font-size: 1.2em; color: #444; }
         .action-button {
@@ -101,6 +122,69 @@
             padding: 10px 25px; border-radius: 20px; font-size: 1em;
             font-weight: 500; cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        /* State saat amplop terbuka */
+        .envelope.open .envelope-flap { transform: rotateX(180deg); }
+        .envelope.open .letter { transform: translateY(0%); }
+        .envelope.open .envelope-front-label { opacity: 0; }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="heart"></div>
+    </div>
+    <div class="main-container">
+        <div class="top-section">
+            <h1 class="main-title">Untuk Ibu,</h1>
+            <p class="sub-title">dari ayah, mas, adik</p>
+        </div>
+        <div class="content-section">
+            <div class="envelope" id="videoEnvelope">
+                <div class="envelope-back"></div>
+                <div class="letter">
+                    <div class="letter-content">Sebuah Pesan Video</div>
+                    <a href="#" target="_blank"><button class="action-button">Lihat Video</button></a>
+                </div>
+                <div class="envelope-flap"></div>
+                <div class="envelope-front-label">Video</div>
+            </div>
+            <div class="envelope" id="fotoEnvelope">
+                <div class="envelope-back"></div>
+                <div class="letter">
+                    <div class="letter-content">Kenangan Kita</div>
+                    <a href="galeri.html"><button class="action-button">Lihat Foto</button></a>
+                </div>
+                <div class="envelope-flap"></div>
+                <div class="envelope-front-label">Foto</div>
+            </div>
+        </div>
+        <div class="bottom-section"></div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            const preloader = document.querySelector('.preloader');
+            const body = document.querySelector('body');
+            setTimeout(function() {
+                preloader.classList.add('loaded');
+                body.classList.add('loaded');
+                body.style.overflow = 'auto';
+            }, 1500);
+        });
+        // --- JAVASCRIPT BARU: AMPLOP TIDAK BISA DITUTUP LAGI ---
+        const envelopes = document.querySelectorAll('.envelope');
+        envelopes.forEach(envelope => {
+            envelope.addEventListener('click', (event) => {
+                // Jangan buka amplop jika yang diklik adalah link/tombol di dalamnya
+                if (event.target.closest('a')) {
+                    return;
+                }
+                // Hanya tambahkan kelas 'open', tidak bisa ditutup lagi
+                envelope.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .envelope.open .envelope-flap { transform: rotateX(180deg); }
         .envelope.open .letter { transform: translateY(0%); }
