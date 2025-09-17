@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Nonaktifkan sorotan biru di HP */
+            -webkit-tap-highlight-color: transparent;
         }
         html, body {
             width: 100%;
@@ -36,6 +36,11 @@
             color: #333;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            /* --- PERBAIKAN #1: MENCEGAH TEKS BISA DI-BLOK --- */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         .start-button {
             font-family: 'Montserrat', sans-serif;
@@ -112,38 +117,50 @@
     </div>
     <div id="whirlpool-overlay"></div>
     <script>
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('#startButton')) {
-                return;
+        // --- PERBAIKAN #2: MEMASTIKAN WEBSITE BEKERJA SAAT KEMBALI ---
+        window.addEventListener('pageshow', function(event) {
+            // event.persisted bernilai true jika halaman diambil dari cache (saat menekan tombol back)
+            if (event.persisted) {
+                // Cara paling ampuh adalah dengan memaksa muat ulang halaman
+                window.location.reload();
             }
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.className = 'flying-heart';
-            heart.style.left = (event.clientX - 10) + 'px';
-            heart.style.top = (event.clientY - 10) + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => {
-                heart.remove();
-            }, 1500);
         });
 
-        const startLink = document.getElementById('startButton');
-        const whirlpoolOverlay = document.getElementById('whirlpool-overlay');
-        startLink.addEventListener('click', function(event) {
-            event.preventDefault(); 
-            whirlpoolOverlay.classList.add('active');
-            for (let i = 0; i < 30; i++) {
-                const swirlingHeart = document.createElement('div');
-                swirlingHeart.innerHTML = '💕';
-                swirlingHeart.className = 'swirling-heart';
-                swirlingHeart.style.animationDelay = (Math.random() * 0.5) + 's';
-                whirlpoolOverlay.appendChild(swirlingHeart);
-            }
-            const destination = this.href;
-            setTimeout(() => {
-                window.location.href = destination;
-            }, 2000);
-        });
+        // Seluruh logika animasi halaman
+        function initializePage() {
+            // Logika untuk hati terbang saat diklik di mana saja
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('#startButton')) return;
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.className = 'flying-heart';
+                heart.style.left = (event.clientX - 10) + 'px';
+                heart.style.top = (event.clientY - 10) + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 1500);
+            });
+
+            // Logika untuk animasi pusaran saat tombol diklik
+            const startLink = document.getElementById('startButton');
+            const whirlpoolOverlay = document.getElementById('whirlpool-overlay');
+            startLink.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                whirlpoolOverlay.classList.add('active');
+                for (let i = 0; i < 30; i++) {
+                    const swirlingHeart = document.createElement('div');
+                    swirlingHeart.innerHTML = '💕';
+                    swirlingHeart.className = 'swirling-heart';
+                    swirlingHeart.style.animationDelay = (Math.random() * 0.5) + 's';
+                    whirlpoolOverlay.appendChild(swirlingHeart);
+                }
+                const destination = this.href;
+                setTimeout(() => { window.location.href = destination; }, 2000);
+            });
+        }
+
+        // Jalankan logika setelah halaman dimuat
+        initializePage();
+
     </script>
 </body>
 </html>
