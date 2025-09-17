@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -7,17 +6,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap');
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
         }
         /* === PRELOADER === */
         .preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #d7e9d5; z-index: 9999; display: flex;
+            background-color: #c0e399; z-index: 9999; display: flex;
             justify-content: center; align-items: center;
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
@@ -37,22 +33,15 @@
             0%, 50%, 100% { transform: rotate(-45deg) scale(1); }
             30%, 70% { transform: rotate(-45deg) scale(1.1); }
         }
-        /* === MAIN PAGE LAYOUT === */
+        /* === MAIN PAGE LAYOUT (WARNA & TATA LETAK BARU) === */
         .main-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            background-color: #ffffff;
-            opacity: 0;
-            transition: opacity 0.8s ease-out 0.5s;
+            width: 100%; height: 100%; display: flex; flex-direction: column;
+            opacity: 0; transition: opacity 0.8s ease-out 0.5s;
         }
         body.loaded .main-container { opacity: 1; }
         .top-section {
-            background-color: #d7e9d5;
-            padding: 40px 20px 30px 20px;
-            text-align: center;
-            border-bottom: 2px dashed #ffffff;
+            background-color: #c0e399; /* Warna hijau baru */
+            padding: 40px 20px 30px 20px; text-align: center;
         }
         .main-title {
             font-family: 'Dancing Script', cursive; font-size: 3.5em;
@@ -64,85 +53,53 @@
         }
         .content-section {
             flex-grow: 1;
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            gap: 25px;
+            /* Gradient untuk transisi warna dari hijau ke putih */
+            background: linear-gradient(to bottom, #c0e399 0%, #c0e399 150px, white 150px, white 100%);
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 20px; gap: 25px;
         }
         .bottom-section {
-            background-color: #d7e9d5;
-            min-height: 10%;
+            background-color: #c0e399; /* Warna hijau baru */
+            min-height: 8%; /* Sedikit lebih kecil */
         }
-        /* === FITUR AMPLOP INTERAKTIF === */
-        .envelope-wrapper { perspective: 1000px; }
+        /* === FITUR AMPLOP (PERBAIKAN BUG) === */
         .envelope {
-            position: relative;
-            width: 280px;
-            height: 180px;
-            cursor: pointer;
-            transform-style: preserve-3d;
+            position: relative; width: 280px; height: 180px;
+            cursor: pointer; transform-style: preserve-3d;
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .envelope-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #f7c9d9;
-            border-radius: 10px;
+            position: absolute; width: 100%; height: 100%;
+            background-color: #f7c9d9; border-radius: 10px;
+            z-index: 1; /* Atur tumpukan elemen */
         }
         .envelope-flap {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #f5b9cd;
-            transform-origin: top;
+            position: absolute; width: 100%; height: 100%;
+            background-color: #f5b9cd; transform-origin: top;
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+            z-index: 3; /* Atur tumpukan elemen */
         }
         .envelope-front-label {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #333;
-            font-size: 1.8em;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
+            position: absolute; width: 100%; height: 100%; display: flex;
+            justify-content: center; align-items: center; color: #333;
+            font-size: 1.8em; font-weight: 600; transition: opacity 0.3s ease;
+            z-index: 4; /* Atur tumpukan elemen */
         }
         .letter {
-            position: absolute;
-            top: 0;
-            width: 95%;
-            height: 95%;
-            margin: 2.5%;
-            background-color: white;
-            border-radius: 8px;
+            position: absolute; top: 0; width: 95%; height: 95%;
+            margin: 2.5%; background-color: white; border-radius: 8px;
             transform: translateY(100%);
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; gap: 15px;
+            z-index: 2; /* Atur tumpukan elemen */
         }
-        .letter-content {
-            font-size: 1.2em;
-            color: #444;
-        }
+        .letter-content { font-size: 1.2em; color: #444; }
         .action-button {
-            background-color: #f7c9d9;
-            color: #333;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-size: 1em;
-            font-weight: 500;
-            cursor: pointer;
+            background-color: #f7c9d9; color: #333; border: none;
+            padding: 10px 25px; border-radius: 20px; font-size: 1em;
+            font-weight: 500; cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .envelope.open .envelope-flap { transform: rotateX(180deg); }
@@ -164,7 +121,7 @@
                 <div class="envelope-back"></div>
                 <div class="letter">
                     <div class="letter-content">Sebuah Pesan Video</div>
-                    <button class="action-button">Lihat Video</button>
+                    <a href="#" target="_blank"><button class="action-button">Lihat Video</button></a>
                 </div>
                 <div class="envelope-flap"></div>
                 <div class="envelope-front-label">Video</div>
@@ -173,7 +130,7 @@
                 <div class="envelope-back"></div>
                 <div class="letter">
                     <div class="letter-content">Kenangan Kita</div>
-                    <button class="action-button">Lihat Foto</button>
+                    <a href="galeri.html"><button class="action-button">Lihat Foto</button></a>
                 </div>
                 <div class="envelope-flap"></div>
                 <div class="envelope-front-label">Foto</div>
@@ -193,20 +150,15 @@
         });
         const envelopes = document.querySelectorAll('.envelope');
         envelopes.forEach(envelope => {
-            envelope.addEventListener('click', () => {
+            envelope.addEventListener('click', (event) => {
+                // Pastikan klik bukan pada link/tombol di dalam amplop
+                if (event.target.closest('a')) return;
                 envelopes.forEach(otherEnvelope => {
                     if (otherEnvelope !== envelope) {
                         otherEnvelope.classList.remove('open');
                     }
                 });
                 envelope.classList.toggle('open');
-            });
-        });
-        const actionButtons = document.querySelectorAll('.action-button');
-        actionButtons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                event.stopPropagation();
-                alert("Tombol '" + button.textContent + "' diklik!");
             });
         });
     </script>
