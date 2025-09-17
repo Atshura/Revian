@@ -3,233 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Ibu</title>
+    <title>Selamat Ulang Tahun Ibu!</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Mengimpor font dari Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@500&display=swap');
+
+        /* Reset dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         html, body {
-            width: 100%; height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            background-color: #f0f0f0;
-        }
-        /* === PRELOADER & TRANSISI BARU (ZOOM OUT & FADE) === */
-        .preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #c0e399; z-index: 9999; display: flex;
-            justify-content: center; align-items: center;
-            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
-            transform-origin: center;
-        }
-        .preloader.loaded {
-            transform: scale(1.5); /* Membesar sedikit sebelum menghilang */
-            opacity: 0;
-            visibility: hidden;
-        }
-        .heart {
-            width: 100px; height: 100px; background-color: #f7c9d9;
-            position: relative; transform: rotate(-45deg);
-            animation: beat 1.4s ease-in-out infinite;
-        }
-        .heart::before, .heart::after {
-            content: ""; width: 100px; height: 100px;
-            background-color: #f7c9d9; border-radius: 50%; position: absolute;
-        }
-        .heart::before { top: -50px; left: 0; }
-        .heart::after { top: 0; left: 50px; }
-        @keyframes beat {
-            0%, 50%, 100% { transform: rotate(-45deg) scale(1); }
-            30%, 70% { transform: rotate(-45deg) scale(1.1); }
-        }
-        /* === MAIN PAGE LAYOUT === */
-        .main-container {
-            width: 100vw; height: 100vh;
-            display: flex; flex-direction: column;
-            opacity: 0; transition: opacity 0.8s ease-out 0.5s;
-            background-color: #fff;
-        }
-        body.loaded .main-container { opacity: 1; }
-        .top-section {
-            background-color: #c0e399;
-            padding: 40px 20px 30px 20px; text-align: center;
-        }
-        .main-title {
-            font-family: 'Dancing Script', cursive; font-size: 3.5em;
-            color: #333; margin: 0; font-weight: 700;
-        }
-        .sub-title {
-            font-family: 'Montserrat', sans-serif; font-size: 1em;
-            color: #555; margin-top: 5px;
-        }
-        .content-section {
-            flex-grow: 1; position: relative;
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; padding: 20px; gap: 25px;
-        }
-        .content-section::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 150px; background-color: #c0e399; z-index: 0;
-        }
-        .bottom-section { background-color: #c0e399; min-height: 8%; }
-
-        /* === FITUR AMPLOP DENGAN PITA & ANIMASI HATI === */
-        .envelope {
-            position: relative; width: 280px; height: 180px;
-            cursor: pointer; z-index: 1;
-        }
-        .envelope-back {
-            position: absolute; width: 100%; height: 100%;
-            background-color: #f7c9d9; border-radius: 10px;
-        }
-        .envelope-flap {
-            position: absolute; width: 100%; height: 100%;
-            background-color: #f5b9cd; transform-origin: top;
-            transition: transform 0.5s ease-out 0.3s; /* Diberi jeda */
-            clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
-            z-index: 3;
-        }
-        .envelope-front-label {
-            position: absolute; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            color: #333; font-size: 1.8em; font-weight: 600;
-            transition: opacity 0.3s ease; z-index: 5;
-        }
-        .letter {
-            position: absolute; top: 0; width: 95%; height: 95%; margin: 2.5%;
-            background-color: white; border-radius: 8px;
-            transform: translateY(5px);
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            opacity: 0;
-            transition: transform 0.5s ease-out 0.3s, opacity 0.5s ease-out 0.3s;
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; gap: 15px; z-index: 2;
-        }
-        /* PITA PADA AMPLOP */
-        .ribbon {
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
+            width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
-            z-index: 4;
-            transition: height 0.4s ease-in-out;
+            overflow: hidden;
         }
-        .ribbon::after { /* Simpul pita */
-            content: '🎀';
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.5);
-            font-size: 1.2em;
-        }
-        /* State saat amplop terbuka */
-        .envelope.open .envelope-flap { transform: rotateX(180deg); }
-        .envelope.open .letter { transform: translateY(0); opacity: 1; }
-        .envelope.open .envelope-front-label { opacity: 0; }
-        .envelope.open .ribbon { height: 0; } /* Animasi pita melepas */
 
-        /* PARTIKEL HATI TERBANG */
-        .flying-heart {
-            position: absolute;
-            top: 50%; left: 50%;
-            font-size: 20px;
-            pointer-events: none; /* Agar tidak bisa diklik */
+        /* Kontainer utama sebagai halaman */
+        .container {
+            width: 100vw;
+            height: 100vh;
+            background-color: #c0e399; /* Latar hijau */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            gap: 40px; /* Jarak antara judul dan tombol */
+        }
+
+        /* Judul ucapan ulang tahun */
+        .birthday-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4em; /* Ukuran bisa disesuaikan */
+            color: #333;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Tombol Mulai */
+        .start-button {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #333;
+            background-color: #f7c9d9; /* Warna pink */
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px; /* Membuatnya lonjong */
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* === ANIMASI PORTAL === */
+        #portal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, #f7c9d9 50%, #c0e399 100%);
+            z-index: 9999;
+            
+            /* Mulai dari kecil dan transparan */
+            transform: scale(0);
+            opacity: 0;
+            border-radius: 50%; /* Selalu bulat */
+            
+            /* Transisi untuk animasi */
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s ease-out;
+        }
+        
+        /* State aktif saat portal muncul */
+        #portal-overlay.active {
+            transform: scale(2); /* Membesar melebihi layar */
             opacity: 1;
-            z-index: 10;
-            animation: fly 1.5s ease-out forwards;
         }
-        @keyframes fly {
-            to {
-                transform: var(--transform-end);
-                opacity: 0;
-            }
-        }
+
     </style>
 </head>
 <body>
-    <div class="preloader">
-        <div class="heart"></div>
+
+    <div class="container">
+        <h1 class="birthday-title">Selamat Ulang Tahun Ibu!</h1>
+        
+        <a id="startButton" href="https://www.revianchim.me">
+            <button class="start-button">Mulai</button>
+        </a>
     </div>
 
-    <div class="main-container">
-        <div class="top-section">
-            <h1 class="main-title">Untuk Ibu,</h1>
-            <p class="sub-title">dari ayah, mas, adik</p>
-        </div>
-        <div class="content-section">
-            <div class="envelope" id="videoEnvelope">
-                <div class="envelope-back"></div>
-                <div class="letter">
-                    <div class="letter-content">Sebuah Pesan Video</div>
-                    <a href="#" target="_blank"><button class="action-button">Lihat Video</button></a>
-                </div>
-                <div class="ribbon"></div>
-                <div class="envelope-flap"></div>
-                <div class="envelope-front-label">Video</div>
-            </div>
-            <div class="envelope" id="fotoEnvelope">
-                <div class="envelope-back"></div>
-                <div class="letter">
-                    <div class="letter-content">Kenangan Kita</div>
-                    <a href="galeri.html"><button class="action-button">Lihat Foto</button></a>
-                </div>
-                <div class="ribbon"></div>
-                <div class="envelope-flap"></div>
-                <div class="envelope-front-label">Foto</div>
-            </div>
-        </div>
-        <div class="bottom-section"></div>
-    </div>
+    <div id="portal-overlay"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Logika untuk menghilangkan loading page
-            const preloader = document.querySelector('.preloader');
-            const body = document.querySelector('body');
+        // Menangkap elemen link tombol
+        const startLink = document.getElementById('startButton');
+        // Menangkap elemen overlay portal
+        const portalOverlay = document.getElementById('portal-overlay');
+
+        // Menambahkan event listener saat link diklik
+        startLink.addEventListener('click', function(event) {
+            // 1. Mencegah link langsung pindah halaman
+            event.preventDefault(); 
+            
+            // 2. Menjalankan animasi portal
+            portalOverlay.classList.add('active');
+            
+            // 3. Simpan tujuan link
+            const destination = this.href;
+            
+            // 4. Tunggu animasi selesai (1000ms = 1 detik), lalu pindah halaman
             setTimeout(() => {
-                preloader.classList.add('loaded');
-                body.classList.add('loaded');
-                body.style.overflow = 'auto';
-            }, 1500);
-
-            // Logika untuk amplop
-            const envelopes = document.querySelectorAll('.envelope');
-            envelopes.forEach(envelope => {
-                envelope.addEventListener('click', (event) => {
-                    if (event.target.closest('a')) return;
-
-                    // Cek jika amplop akan dibuka (bukan ditutup)
-                    if (!envelope.classList.contains('open')) {
-                        createFlyingHearts(envelope);
-                    }
-                    
-                    // Toggle untuk membuka & menutup amplop
-                    envelope.classList.toggle('open');
-                });
-            });
-
-            // Fungsi untuk membuat animasi hati terbang
-            function createFlyingHearts(container) {
-                for (let i = 0; i < 15; i++) {
-                    const heart = document.createElement('div');
-                    heart.innerHTML = '❤️';
-                    heart.className = 'flying-heart';
-                    
-                    // Acak tujuan akhir & skala hati
-                    const xEnd = (Math.random() - 0.5) * 200;
-                    const yEnd = (Math.random() - 0.5) * 200 - 100;
-                    const scaleEnd = Math.random() * 0.5 + 0.5;
-                    heart.style.setProperty('--transform-end', `translate(${xEnd}px, ${yEnd}px) scale(${scaleEnd})`);
-                    
-                    container.appendChild(heart);
-
-                    // Hapus elemen hati setelah animasi selesai
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 1500);
-                }
-            }
+                window.location.href = destination;
+            }, 1000);
         });
     </script>
+
 </body>
 </html>
