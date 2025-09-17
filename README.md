@@ -74,7 +74,7 @@
         .envelope {
             position: relative; width: 280px; height: 180px;
             cursor: pointer;
-            overflow: hidden; /* INI FIX UTAMA UNTUK BUG AMPLOP */
+            overflow: hidden; /* FIX UTAMA UNTUK BUG AMPLOP */
             border-radius: 10px;
             z-index: 1;
         }
@@ -99,15 +99,6 @@
             transform: translateY(100%);
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; justify-content: center;
-            align-items: center; gap: 1            color: #333; font-size: 1.8em; font-weight: 600;
-            transition: opacity 0.3s ease; z-index: 4;
-        }
-        .letter {
-            top: 0; width: 95%; height: 95%; margin: 2.5%;
-            background-color: white; border-radius: 8px;
-            transform: translateY(100%); /* Mulai dari bawah, tersembunyi */
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; justify-content: center;
             align-items: center; gap: 15px; z-index: 2;
         }
         .letter-content { font-size: 1.2em; color: #444; }
@@ -117,7 +108,6 @@
             font-weight: 500; cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        /* State saat amplop terbuka */
         .envelope.open .envelope-flap { transform: rotateX(180deg); }
         .envelope.open .letter { transform: translateY(0%); }
         .envelope.open .envelope-front-label { opacity: 0; }
@@ -155,7 +145,8 @@
         <div class="bottom-section"></div>
     </div>
     <script>
-        window.addEventListener('load', function() {
+        // PERBAIKAN: Menggunakan DOMContentLoaded agar tidak macet
+        document.addEventListener('DOMContentLoaded', function() {
             const preloader = document.querySelector('.preloader');
             const body = document.querySelector('body');
             setTimeout(function() {
@@ -164,79 +155,14 @@
                 body.style.overflow = 'auto';
             }, 1500);
         });
-        // --- JAVASCRIPT BARU: AMPLOP TIDAK BISA DITUTUP LAGI ---
+        // Logika untuk amplop
         const envelopes = document.querySelectorAll('.envelope');
         envelopes.forEach(envelope => {
             envelope.addEventListener('click', (event) => {
-                // Jangan buka amplop jika yang diklik adalah link/tombol di dalamnya
                 if (event.target.closest('a')) {
                     return;
                 }
-                // Hanya tambahkan kelas 'open', tidak bisa ditutup lagi
                 envelope.classList.add('open');
-            });
-        });
-    </script>
-</body>
-</html>            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .envelope.open .envelope-flap { transform: rotateX(180deg); }
-        .envelope.open .letter { transform: translateY(0%); }
-        .envelope.open .envelope-front-label { opacity: 0; }
-    </style>
-</head>
-<body>
-    <div class="preloader">
-        <div class="heart"></div>
-    </div>
-    <div class="main-container">
-        <div class="top-section">
-            <h1 class="main-title">Untuk Ibu,</h1>
-            <p class="sub-title">dari ayah, mas, adik</p>
-        </div>
-        <div class="content-section">
-            <div class="envelope" id="videoEnvelope">
-                <div class="envelope-back"></div>
-                <div class="letter">
-                    <div class="letter-content">Sebuah Pesan Video</div>
-                    <a href="#" target="_blank"><button class="action-button">Lihat Video</button></a>
-                </div>
-                <div class="envelope-flap"></div>
-                <div class="envelope-front-label">Video</div>
-            </div>
-            <div class="envelope" id="fotoEnvelope">
-                <div class="envelope-back"></div>
-                <div class="letter">
-                    <div class="letter-content">Kenangan Kita</div>
-                    <a href="galeri.html"><button class="action-button">Lihat Foto</button></a>
-                </div>
-                <div class="envelope-flap"></div>
-                <div class="envelope-front-label">Foto</div>
-            </div>
-        </div>
-        <div class="bottom-section"></div>
-    </div>
-    <script>
-        window.addEventListener('load', function() {
-            const preloader = document.querySelector('.preloader');
-            const body = document.querySelector('body');
-            setTimeout(function() {
-                preloader.classList.add('loaded');
-                body.classList.add('loaded');
-                body.style.overflow = 'auto';
-            }, 1500);
-        });
-        const envelopes = document.querySelectorAll('.envelope');
-        envelopes.forEach(envelope => {
-            envelope.addEventListener('click', (event) => {
-                // Pastikan klik bukan pada link/tombol di dalam amplop
-                if (event.target.closest('a')) return;
-                envelopes.forEach(otherEnvelope => {
-                    if (otherEnvelope !== envelope) {
-                        otherEnvelope.classList.remove('open');
-                    }
-                });
-                envelope.classList.toggle('open');
             });
         });
     </script>
