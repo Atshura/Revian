@@ -74,7 +74,6 @@
         }
         .main-container {
             width: 100%;
-            max-width: 450px;
             height: 100%;
             max-height: 900px;
             display: flex;
