@@ -5,126 +5,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Ulang Tahun Ibu!</title>
     <style>
-        /* Mengimpor font dari Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@500&display=swap');
-
-        /* Reset dasar */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
+            cursor: pointer; /* Kursor pointer di seluruh halaman */
         }
-
-        /* Kontainer utama sebagai halaman */
         .container {
             width: 100vw;
             height: 100vh;
-            background-color: #c0e399; /* Latar hijau */
+            background-color: #c0e399;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
-            gap: 40px; /* Jarak antara judul dan tombol */
+            gap: 40px;
         }
-
-        /* Judul ucapan ulang tahun */
         .birthday-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 4em; /* Ukuran bisa disesuaikan */
+            font-size: clamp(2.5em, 8vw, 4em); /* Ukuran font responsif */
             color: #333;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
-
-        /* Tombol Mulai */
         .start-button {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.2em;
             font-weight: 500;
             color: #333;
-            background-color: #f7c9d9; /* Warna pink */
+            background-color: #f7c9d9;
             border: none;
             padding: 15px 40px;
-            border-radius: 50px; /* Membuatnya lonjong */
+            border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 10; /* Pastikan tombol di atas efek klik biasa */
         }
-
         .start-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
 
-        /* === ANIMASI PORTAL === */
-        #portal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, #f7c9d9 50%, #c0e399 100%);
-            z-index: 9999;
-            
-            /* Mulai dari kecil dan transparan */
-            transform: scale(0);
-            opacity: 0;
-            border-radius: 50%; /* Selalu bulat */
-            
-            /* Transisi untuk animasi */
-            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s ease-out;
-        }
-        
-        /* State aktif saat portal muncul */
-        #portal-overlay.active {
-            transform: scale(2); /* Membesar melebihi layar */
+        /* === FITUR BARU: HATI TERBANG SAAT DIKLIK === */
+        .flying-heart {
+            position: fixed; /* Posisi relatif terhadap layar */
+            font-size: 24px;
+            color: #ff79ac;
+            pointer-events: none; /* Agar tidak bisa diklik */
             opacity: 1;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        @keyframes floatUp {
+            to {
+                transform: translateY(-200px);
+                opacity: 0;
+            }
         }
 
+        /* === ANIMASI BARU: PUSARAN CINTA (WHIRLPOOL) === */
+        #whirlpool-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: #c0e399;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #whirlpool-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .swirling-heart {
+            position: absolute;
+            top: 50%; left: 50%;
+            font-size: 30px;
+            color: #f7c9d9;
+            animation: swirl 1.5s ease-in forwards;
+        }
+        @keyframes swirl {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(3) translateX(150px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(720deg) scale(0) translateX(0px) rotate(-720deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1 class="birthday-title">Selamat Ulang Tahun Ibu!</h1>
-        
         <a id="startButton" href="https://www.revianchim.me">
             <button class="start-button">Mulai</button>
         </a>
     </div>
 
-    <div id="portal-overlay"></div>
+    <div id="whirlpool-overlay"></div>
 
     <script>
-        // Menangkap elemen link tombol
-        const startLink = document.getElementById('startButton');
-        // Menangkap elemen overlay portal
-        const portalOverlay = document.getElementById('portal-overlay');
+        // --- FITUR 1: HATI TERBANG SAAT DIKLIK DI MANA SAJA ---
+        document.addEventListener('click', function(event) {
+            // Hentikan fungsi jika yang diklik adalah tombol "Mulai"
+            if (event.target.closest('#startButton')) {
+                return;
+            }
 
-        // Menambahkan event listener saat link diklik
+            // Buat elemen hati baru
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'flying-heart';
+            
+            // Posisikan hati di lokasi kursor
+            // Offset -10px agar muncul tepat di atas jari
+            heart.style.left = (event.clientX - 10) + 'px';
+            heart.style.top = (event.clientY - 10) + 'px';
+            
+            // Tambahkan ke halaman
+            document.body.appendChild(heart);
+            
+            // Hapus elemen hati setelah animasinya selesai
+            setTimeout(() => {
+                heart.remove();
+            }, 1500);
+        });
+
+        // --- FITUR 2: ANIMASI PUSARAN SAAT TOMBOL DIKLIK ---
+        const startLink = document.getElementById('startButton');
+        const whirlpoolOverlay = document.getElementById('whirlpool-overlay');
+
         startLink.addEventListener('click', function(event) {
             // 1. Mencegah link langsung pindah halaman
             event.preventDefault(); 
             
-            // 2. Menjalankan animasi portal
-            portalOverlay.classList.add('active');
+            // 2. Tampilkan overlay dan mulai pusaran
+            whirlpoolOverlay.classList.add('active');
+            
+            // Buat banyak hati untuk efek pusaran
+            for (let i = 0; i < 30; i++) {
+                const swirlingHeart = document.createElement('div');
+                swirlingHeart.innerHTML = '💕';
+                swirlingHeart.className = 'swirling-heart';
+                // Beri jeda animasi acak agar terlihat lebih natural
+                swirlingHeart.style.animationDelay = (Math.random() * 0.5) + 's';
+                whirlpoolOverlay.appendChild(swirlingHeart);
+            }
             
             // 3. Simpan tujuan link
             const destination = this.href;
             
-            // 4. Tunggu animasi selesai (1000ms = 1 detik), lalu pindah halaman
+            // 4. Tunggu animasi selesai (2000ms = 2 detik), lalu pindah halaman
             setTimeout(() => {
                 window.location.href = destination;
-            }, 1000);
+            }, 2000);
         });
     </script>
 
