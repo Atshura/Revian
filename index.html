@@ -6,12 +6,17 @@
     <title>Selamat Ulang Tahun Ibu!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@500&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Nonaktifkan sorotan biru di HP */
+        }
         html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            cursor: pointer; /* Kursor pointer di seluruh halaman */
+            cursor: pointer;
         }
         .container {
             width: 100vw;
@@ -27,7 +32,7 @@
         }
         .birthday-title {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(2.5em, 8vw, 4em); /* Ukuran font responsif */
+            font-size: clamp(2.5em, 8vw, 4em);
             color: #333;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
@@ -45,19 +50,17 @@
             text-decoration: none;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            z-index: 10; /* Pastikan tombol di atas efek klik biasa */
+            z-index: 10;
         }
         .start-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
-
-        /* === FITUR BARU: HATI TERBANG SAAT DIKLIK === */
         .flying-heart {
-            position: fixed; /* Posisi relatif terhadap layar */
+            position: fixed;
             font-size: 24px;
             color: #ff79ac;
-            pointer-events: none; /* Agar tidak bisa diklik */
+            pointer-events: none;
             opacity: 1;
             animation: floatUp 1.5s ease-out forwards;
         }
@@ -67,8 +70,6 @@
                 opacity: 0;
             }
         }
-
-        /* === ANIMASI BARU: PUSARAN CINTA (WHIRLPOOL) === */
         #whirlpool-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -103,73 +104,46 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1 class="birthday-title">Selamat Ulang Tahun Ibu!</h1>
         <a id="startButton" href="https://www.revianchim.me">
             <button class="start-button">Mulai</button>
         </a>
     </div>
-
     <div id="whirlpool-overlay"></div>
-
     <script>
-        // --- FITUR 1: HATI TERBANG SAAT DIKLIK DI MANA SAJA ---
         document.addEventListener('click', function(event) {
-            // Hentikan fungsi jika yang diklik adalah tombol "Mulai"
             if (event.target.closest('#startButton')) {
                 return;
             }
-
-            // Buat elemen hati baru
             const heart = document.createElement('div');
             heart.innerHTML = '❤️';
             heart.className = 'flying-heart';
-            
-            // Posisikan hati di lokasi kursor
-            // Offset -10px agar muncul tepat di atas jari
             heart.style.left = (event.clientX - 10) + 'px';
             heart.style.top = (event.clientY - 10) + 'px';
-            
-            // Tambahkan ke halaman
             document.body.appendChild(heart);
-            
-            // Hapus elemen hati setelah animasinya selesai
             setTimeout(() => {
                 heart.remove();
             }, 1500);
         });
 
-        // --- FITUR 2: ANIMASI PUSARAN SAAT TOMBOL DIKLIK ---
         const startLink = document.getElementById('startButton');
         const whirlpoolOverlay = document.getElementById('whirlpool-overlay');
-
         startLink.addEventListener('click', function(event) {
-            // 1. Mencegah link langsung pindah halaman
             event.preventDefault(); 
-            
-            // 2. Tampilkan overlay dan mulai pusaran
             whirlpoolOverlay.classList.add('active');
-            
-            // Buat banyak hati untuk efek pusaran
             for (let i = 0; i < 30; i++) {
                 const swirlingHeart = document.createElement('div');
                 swirlingHeart.innerHTML = '💕';
                 swirlingHeart.className = 'swirling-heart';
-                // Beri jeda animasi acak agar terlihat lebih natural
                 swirlingHeart.style.animationDelay = (Math.random() * 0.5) + 's';
                 whirlpoolOverlay.appendChild(swirlingHeart);
             }
-            
-            // 3. Simpan tujuan link
             const destination = this.href;
-            
-            // 4. Tunggu animasi selesai (2000ms = 2 detik), lalu pindah halaman
             setTimeout(() => {
                 window.location.href = destination;
             }, 2000);
         });
     </script>
-
 </body>
 </html>
