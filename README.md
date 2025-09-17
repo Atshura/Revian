@@ -5,27 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Untuk Ibu</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap');   
-        /* Reset dasar untuk memastikan tampilan fullscreen */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden; /* Mencegah scroll saat loading */
+            overflow: hidden;
         }
-        /* === PRELOADER (Tetap sama, sudah berfungsi baik) === */
         .preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #c0e399; z-index: 9999; display: flex;
             justify-content: center; align-items: center;
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: opacity 1s ease, visibility 1s ease;
         }
-        .preloader.loaded { transform: translateY(-100%); }
+        .preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
         .heart {
             width: 100px; height: 100px; background-color: #f7c9d9;
             position: relative; transform: rotate(-45deg);
@@ -41,13 +37,11 @@
             0%, 50%, 100% { transform: rotate(-45deg) scale(1); }
             30%, 70% { transform: rotate(-45deg) scale(1.1); }
         }
-        /* === MAIN PAGE LAYOUT (FIXED UNTUK FULLSCREEN) === */
         .main-container {
-            width: 100vw; /* 100% lebar viewport */
-            height: 100vh; /* 100% tinggi viewport */
+            width: 100vw; height: 100vh;
             display: flex; flex-direction: column;
             opacity: 0; transition: opacity 0.8s ease-out 0.5s;
-            background-color: #fff; /* Latar dasar putih */
+            background-color: #fff;
         }
         body.loaded .main-container { opacity: 1; }
         .top-section {
@@ -63,42 +57,33 @@
             color: #555; margin-top: 5px;
         }
         .content-section {
-            flex-grow: 1;
-            position: relative; /* Kunci untuk tata letak warna */
+            flex-grow: 1; position: relative;
             display: flex; flex-direction: column; align-items: center;
             justify-content: center; padding: 20px; gap: 25px;
         }
-        /* Trik untuk membuat warna hijau di belakang amplop */
         .content-section::before {
-            content: '';
-            position: absolute;
+            content: ''; position: absolute;
             top: 0; left: 0; right: 0;
-            height: 150px; /* Tinggi area hijau */
-            background-color: #c0e399;
+            height: 150px; background-color: #c0e399;
             z-index: 0;
         }
         .bottom-section {
             background-color: #c0e399;
             min-height: 8%;
         }
-        /* === FITUR AMPLOP (BUG FIXED & LOGIC CHANGED) === */
         .envelope {
             position: relative; width: 280px; height: 180px;
             cursor: pointer;
-            overflow: hidden; /* FIX UTAMA: Sembunyikan konten yang meluap */
-            border-radius: 10px; /* Agar overflow mengikuti bentuk amplop */
-            z-index: 1; /* Pastikan amplop di atas background hijau */
+            overflow: hidden; /* INI FIX UTAMA UNTUK BUG AMPLOP */
+            border-radius: 10px;
+            z-index: 1;
         }
         .envelope-back, .envelope-flap, .envelope-front-label, .letter {
-            position: absolute;
-            width: 100%; height: 100%;
+            position: absolute; width: 100%; height: 100%;
         }
-        .envelope-back {
-            background-color: #f7c9d9;
-        }
+        .envelope-back { background-color: #f7c9d9; }
         .envelope-flap {
-            background-color: #f5b9cd;
-            transform-origin: top;
+            background-color: #f5b9cd; transform-origin: top;
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
             z-index: 3;
@@ -106,6 +91,15 @@
         .envelope-front-label {
             display: flex; justify-content: center; align-items: center;
             color: #333; font-size: 1.8em; font-weight: 600;
+            transition: opacity 0.3s ease; z-index: 4;
+        }
+        .letter {
+            top: 0; width: 95%; height: 95%; margin: 2.5%;
+            background-color: white; border-radius: 8px;
+            transform: translateY(100%);
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; gap: 1            color: #333; font-size: 1.8em; font-weight: 600;
             transition: opacity 0.3s ease; z-index: 4;
         }
         .letter {
